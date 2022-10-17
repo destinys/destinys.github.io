@@ -1,0 +1,2009 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java编程自学之路：正则, Semon&#39;s Blog">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Java编程自学之路：正则 | Semon&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Semon&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Semon&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/destinys" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/destinys" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java编程自学之路：正则</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Program/" class="post-category">
+                                Program
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-08-03
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.6k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="正则简介"><a href="#正则简介" class="headerlink" title="正则简介"></a>正则简介</h1><h3 id="正则表达式是什么"><a href="#正则表达式是什么" class="headerlink" title="正则表达式是什么"></a>正则表达式是什么</h3><p>正则表达式(Regular Expression)是一个用正则符号写出的公式，程序对这个公式进行语法分析，简历一个语法分析树，再根据这个分析树结合正则表达式的引擎生成执行程序（也叫状态机），用于字符匹配。</p>
+<h1 id="正则工具类"><a href="#正则工具类" class="headerlink" title="正则工具类"></a>正则工具类</h1><p>JDK中的<code>java.util.regex</code>包提供了对正则表达式的支持。</p>
+<p><code>java.util.regex</code>有三个核心类：</p>
+<ul>
+<li><strong>Pattern类</strong>：正则表达式的编译表示</li>
+<li><strong>Matcher类</strong>：对输入字符串进行解释和匹配操作的引擎</li>
+<li><strong>PatternSyntaxException</strong>：表示正则表达式模式中的语法错误，非强制异常类</li>
+</ul>
+<blockquote>
+<p>Java中使用反斜杠<code>\</code>时必须写成双斜杠<code>\\</code>，用于将其转义为正常反斜杠字符。</p>
+</blockquote>
+<h2 id="Pattern类"><a href="#Pattern类" class="headerlink" title="Pattern类"></a>Pattern类</h2><p><code>Pattern</code>类没有公共构造方法。要创建一个<code>Pattern</code>对象，必须受限调用其静态方法<code>compile</code>，加载正则规则字符串，然后返回一个<code>Pattern</code>对象。</p>
+<h2 id="Matcher类"><a href="#Matcher类" class="headerlink" title="Matcher类"></a>Matcher类</h2><p><code>Matcher</code>类可以说是<code>java.util.regex</code>包的核心类，它具备三类功能：校验、查找、替换。</p>
+<h3 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h3><p>为了校验文本是否与正则规则匹配，<code>Matcher</code>提供了以下方法:</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public boolean lookingAt()</td>
+<td>从区域开头开始与输入的字符串进行匹配</td>
+</tr>
+<tr>
+<td>public boolean find()</td>
+<td>在整个区域查找与输入的字符串进行匹配</td>
+</tr>
+<tr>
+<td>public boolean find(int start)</td>
+<td>从区域的指定位置开始与输入的字符串进行匹配</td>
+</tr>
+<tr>
+<td>public boolean matches()</td>
+<td>验证区域与输入的字符串是完全匹配</td>
+</tr>
+</tbody></table>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p>为了查找文本匹配正则规则的位置，<code>Matcher</code>提供了以下方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public int start()</td>
+<td>返回匹配正则的字符串开始位置索引(与find()结合使用)</td>
+</tr>
+<tr>
+<td>public int start(int group)</td>
+<td>返回匹配指定group的开始位置索引</td>
+</tr>
+<tr>
+<td>public int end()</td>
+<td>返回匹配正则的字符串结束位置索引(与find()结合使用)</td>
+</tr>
+<tr>
+<td>public int end(int group)</td>
+<td>返回匹配指定group的结束位置索引</td>
+</tr>
+<tr>
+<td>public String group()</td>
+<td>返回匹配正则的子序列</td>
+</tr>
+<tr>
+<td>public String group(int group)</td>
+<td>返回匹配指定group的子序列</td>
+</tr>
+</tbody></table>
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><p>替换方法是替换输入字符串里文本的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public Matcher appendReplacement(StringBuffer sb, String replacement)</td>
+<td>实现非终端添加与替换</td>
+</tr>
+<tr>
+<td>public StringBuffer appendTail(StringBuffer sb)</td>
+<td>实现终端添加和替换</td>
+</tr>
+<tr>
+<td>public String replaceAll(String replacement)</td>
+<td>替换与给定替换字符串相匹配的输入序列的每个子序列</td>
+</tr>
+<tr>
+<td>public String replaceFirst(String replacement)</td>
+<td>替换与给定替换字符串相匹配的输入序列的第一个子序列</td>
+</tr>
+<tr>
+<td>public static String quoteReplacement(String s)</td>
+<td>返回指定字符串的字面替换字符串</td>
+</tr>
+</tbody></table>
+<h1 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h1><p>元字符就是正则表达式中具有特殊意义的专用字符。</p>
+<h2 id="基本元字符"><a href="#基本元字符" class="headerlink" title="基本元字符"></a>基本元字符</h2><ul>
+<li><p>多选</p>
+<p><code>|</code>表示或，当不确定要匹配的字符串，希望有多个选择时使用。</p>
+</li>
+<li><p>分组</p>
+<p><code>()</code>表示分组，用于表达式需要由多个子表达式组成时使用。</p>
+</li>
+<li><p>字符有效范围</p>
+<p><code>[]</code>限制字符有效范围，例如<code>[a,z]</code></p>
+</li>
+<li><p>字符数量限制</p>
+<p><code>{}</code> 限制字符数量</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>{n}</td>
+<td>n是一个非负整数，表示匹配n次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>n是一个非负整数，表示至少匹配n次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>n&lt;m, n为非负整数，表示匹配n到m之间任意次</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>转义字符</p>
+<p><code>/</code>用于将元字符转义为普通字符</p>
+</li>
+</ul>
+<blockquote>
+<p>表达式开始:<code>^</code></p>
+<p>表达式结束：<code>$</code></p>
+<p>非：<code>[^]</code></p>
+</blockquote>
+<h2 id="等价字符"><a href="#等价字符" class="headerlink" title="等价字符"></a>等价字符</h2><p>顾名思义，就是对于基本元字符的一种简化。</p>
+<h3 id="某一类型字符的等价字符"><a href="#某一类型字符的等价字符" class="headerlink" title="某一类型字符的等价字符"></a>某一类型字符的等价字符</h3><table>
+<thead>
+<tr>
+<th>等价字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.</code></td>
+<td>匹配除<code>\n</code>外任意单个字符</td>
+</tr>
+<tr>
+<td><code>\d</code></td>
+<td>匹配一个数字字符，等价于<code>[0-9]</code></td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>匹配一个分数字字符，等价于<code>[^0-9]</code></td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>匹配任意单词字符。（Unicode字符集）</td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>匹配任意非单词字符</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>匹配任意不可见字符，如空格、制表符、换页符等。等价于<code>[\f\n\r\t\v]</code></td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任意可见字符，等价于<code>[\f\n\r\t\V]</code></td>
+</tr>
+</tbody></table>
+<h3 id="限制字符数量的等价字符"><a href="#限制字符数量的等价字符" class="headerlink" title="限制字符数量的等价字符"></a>限制字符数量的等价字符</h3><table>
+<thead>
+<tr>
+<th>等价字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code></td>
+<td>匹配前面的子表达式零次或多次，等价于<code>{0,}</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>匹配前面的子表达式一次或多次，等价于<code>{1,}</code></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前面的子表达式零次或一次，等价于<code>{0,1}</code></td>
+</tr>
+</tbody></table>
+<h2 id="元字符优先级"><a href="#元字符优先级" class="headerlink" title="元字符优先级"></a>元字符优先级</h2><p>正则表达式从左向右进行计算，并遵循优先级顺序，与算术表达式类似。正则表达式优先级从高到低如下：</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>优先级</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\</code></td>
+<td>最高</td>
+<td>转义符</td>
+</tr>
+<tr>
+<td><code>()</code>、<code>(?:)</code>、<code>(?=)</code>、<code>[]</code></td>
+<td>高</td>
+<td>括号及中括号</td>
+</tr>
+<tr>
+<td><code>*</code>、<code>+</code>、<code>?</code>、<code>{n,m}</code></td>
+<td>中</td>
+<td>限定符及大括号</td>
+</tr>
+<tr>
+<td><code>^</code>、<code>$</code>、<code>*任意字符</code>、<code>任意字符*</code></td>
+<td>低</td>
+<td>定位点和序列</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>最低</td>
+</tr>
+</tbody></table>
+<h1 id="分组构造"><a href="#分组构造" class="headerlink" title="分组构造"></a>分组构造</h1><p>所谓分组构造，是用来描述正则表达式的子表达式，用于捕获字符串中的子字符串。</p>
+<h2 id="捕获与非捕获"><a href="#捕获与非捕获" class="headerlink" title="捕获与非捕获"></a>捕获与非捕获</h2><p>以下为分组构造中的捕获与非捕获：</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+<th>捕获|非捕获</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(exp)</code></td>
+<td>匹配的子表达式</td>
+<td>捕获</td>
+</tr>
+<tr>
+<td><code>(?&lt;name&gt;exp)</code></td>
+<td>命名的反向引用</td>
+<td>捕获</td>
+</tr>
+<tr>
+<td><code>(?:exp)</code></td>
+<td>非捕获组</td>
+<td>非捕获</td>
+</tr>
+<tr>
+<td><code>(?=exp)</code></td>
+<td>零宽度正预测先行断言</td>
+<td>非捕获</td>
+</tr>
+<tr>
+<td><code>(?!exp)</code></td>
+<td>零宽度负预测先行断言</td>
+<td>非捕获</td>
+</tr>
+<tr>
+<td><code>(?&lt;=exp)</code></td>
+<td>零宽度正回顾后发断言</td>
+<td>非捕获</td>
+</tr>
+<tr>
+<td><code>(?&lt;!exp)</code></td>
+<td>零宽度负回顾后发断言</td>
+<td>非捕获</td>
+</tr>
+</tbody></table>
+<h2 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h2><p>带编号的反向引用使用以下语法：<code>\编号</code></p>
+<p>命名的反向引用通过以下语法：<code>\k&lt;name&gt;</code></p>
+<h2 id="非捕获组"><a href="#非捕获组" class="headerlink" title="非捕获组"></a>非捕获组</h2><p><code>(?:exp)</code>表示当一个限定符应用到一个组，但组捕获的子字符串并非所需时，通常会使用非捕获组构造。</p>
+<h2 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h2><p>用于查找某些内容之前或之后的东西，用于指定一个位置，该位置需要满足一定的条件(断言)，因此称之为零宽断言。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(?=exp)</code></td>
+<td>匹配exp前面的位置</td>
+</tr>
+<tr>
+<td><code>(?&lt;=exp)</code></td>
+<td>匹配exp后面的位置</td>
+</tr>
+<tr>
+<td><code>(?!exp)</code></td>
+<td>匹配后面跟的不是exp的位置</td>
+</tr>
+<tr>
+<td><code>(?&lt;!exp)</code></td>
+<td>匹配前面不是exp的位置</td>
+</tr>
+</tbody></table>
+<h1 id="正则性能优化"><a href="#正则性能优化" class="headerlink" title="正则性能优化"></a>正则性能优化</h1><p>目前正则表达式引擎方式有两种：DFA自动机(Deterministic Final Automata 确定有限状态自动机)和NFA自动机(Non deterministic Finite Automaton 非确定有限状态自动机)。构造DFA自动机代价远大于NFA自动机，但DFA自动机执行效率高于NFA。NFA 自动机的优势是支持更多功能。例如，捕获 group、环视、占有优先量词等高级功能。这些功能都是基于子表达式独立进行匹配，因此在编程语言里，使用的正则表达式库都是基于 NFA 实现的。</p>
+<h2 id="NFA自动机回溯"><a href="#NFA自动机回溯" class="headerlink" title="NFA自动机回溯"></a>NFA自动机回溯</h2><p>用 NFA 自动机实现的比较复杂的正则表达式，在匹配过程中经常会引起回溯问题。大量的回溯会长时间地占用 CPU，从而带来系统性能开销。</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">text=“abbc”
+regex=“ab{1,3}c”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这个例子匹配目的是：匹配以 a 开头，以 c 结尾，中间有 1-3 个 b 字符的字符串。NFA 自动机对其解析的过程是这样的：</p>
+<ul>
+<li>读取正则表达式第一个匹配符 a 和字符串第一个字符 a 进行比较，a 对 a，匹配。</li>
+<li>然后，读取正则表达式第二个匹配符 <code>b{1,3}</code> 和字符串的第二个字符 b 进行比较，匹配。但因为 <code>b{1,3}</code> 表示 1-3 个 b 字符串，NFA 自动机又具有贪婪特性，所以此时不会继续读取正则表达式的下一个匹配符，而是依旧使用 <code>b{1,3}</code> 和字符串的第三个字符 b 进行比较，结果还是匹配。</li>
+<li>接着继续使用 <code>b{1,3}</code> 和字符串的第四个字符 c 进行比较，发现不匹配了，此时就会发生回溯，已经读取的字符串第四个字符 c 将被吐出去，指针回到第三个字符 b 的位置。</li>
+<li>那么发生回溯以后，匹配过程怎么继续呢？程序会读取正则表达式的下一个匹配符 c，和字符串中的第四个字符 c 进行比较，结果匹配，结束。</li>
+</ul>
+<h2 id="如何避免回溯"><a href="#如何避免回溯" class="headerlink" title="如何避免回溯"></a>如何避免回溯</h2><p>正则表达式在进行匹配时，存在以下三种匹配模式：</p>
+<ul>
+<li><p>贪婪模式(Greedy)</p>
+<p>顾名思义，就是在数量匹配中，如果单独使用<code>+</code>、<code>?</code>、<code>*</code>、<code>{n,m}</code>等量词时，正则表达式会匹配尽可能多的内容。</p>
+</li>
+<li><p>懒惰模式(Reluctant)</p>
+<p>在该模式下，正则表达式会尽可能少的重复匹配字符，如果成功，则继续匹配剩余字符。通过在已有表达式后添加<code>？</code>来启用懒惰模式。</p>
+</li>
+<li><p>独占模式(Possessive)</p>
+<p>同贪婪模式一样，独占模式一样会最大限度匹配更多内容。不同的是，匹配失败就会结束匹配，不会发生回溯问题。通过在已有表达式后添加<code>+</code>来启用独占模式。</p>
+</li>
+</ul>
+<h2 id="正则表达式优化"><a href="#正则表达式优化" class="headerlink" title="正则表达式优化"></a>正则表达式优化</h2><h3 id="少用贪婪模式，多用独占模式"><a href="#少用贪婪模式，多用独占模式" class="headerlink" title="少用贪婪模式，多用独占模式"></a>少用贪婪模式，多用独占模式</h3><p>通过独占模式来规避回溯问题。</p>
+<h3 id="减少分支选择"><a href="#减少分支选择" class="headerlink" title="减少分支选择"></a>减少分支选择</h3><p>分支选择会降低正则表达式性能，可以通过以下几种方式来优化：</p>
+<ul>
+<li>常用的选择项放在前面，使其较快地被匹配</li>
+<li>尝试提取多个分支中的共用模式，减少匹配次数</li>
+</ul>
+<h3 id="减少捕获嵌套"><a href="#减少捕获嵌套" class="headerlink" title="减少捕获嵌套"></a>减少捕获嵌套</h3><p>减少不需要获取的分组，可以提高正则表达式性能。</p>
+<h1 id="元字符字典"><a href="#元字符字典" class="headerlink" title="元字符字典"></a>元字符字典</h1><h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code></td>
+<td>匹配前面的子表达式零次或多次。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前面的子表达式零次或一次。例如，”do(es)?” 可以匹配 “do” 或 “does” 中的”do” 。? 等价于 {0,1}。</td>
+</tr>
+<tr>
+<td><code>{n}</code></td>
+<td>n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+</tr>
+<tr>
+<td><code>{n,}</code></td>
+<td>n 是一个非负整数。至少匹配 n 次。例如，’o{2,}’ 不能匹配 “Bob” 中的 ‘o’，但能匹配 “foooood” 中的所有 o。’o{1,}’ 等价于 ‘o+’。’o{0,}’ 则等价于 ‘o*’。</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>m 和 n 均为非负整数，其中 n &lt;= m。最少匹配 n 次且最多匹配 m 次。例如，”o{1,3}” 将匹配 “fooooood” 中的前三个 o。’o{0,1}’ 等价于 ‘o?’。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+</tbody></table>
+<h2 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^</code></td>
+<td>匹配输入字符串开始的位置。如果设置了 RegExp 对象的 Multiline 属性，^ 还会与 \n 或 \r 之后的位置匹配。</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配输入字符串结尾的位置。如果设置了 RegExp 对象的 Multiline 属性，$ 还会与 \n 或 \r 之前的位置匹配。</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>匹配一个字边界，即字与空格间的位置。</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>非字边界匹配。</td>
+</tr>
+</tbody></table>
+<h2 id="非打印字符"><a href="#非打印字符" class="headerlink" title="非打印字符"></a>非打印字符</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\cx</code></td>
+<td>匹配由 x 指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。x 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 ‘c’ 字符。</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>匹配一个换页符。等价于 \x0c 和 \cL。</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>匹配一个换行符。等价于 \x0a 和 \cJ。</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>匹配一个回车符。等价于 \x0d 和 \cM。</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任何非空白字符。等价于 [ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>匹配一个制表符。等价于 \x09 和 \cI。</td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>匹配一个垂直制表符。等价于 \x0b 和 \cK。</td>
+</tr>
+</tbody></table>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(exp)</code></td>
+<td>匹配的子表达式。()中的内容就是子表达式。</td>
+</tr>
+<tr>
+<td><code>(?&lt;name&gt;exp)</code></td>
+<td>命名的子表达式（反向引用）。</td>
+</tr>
+<tr>
+<td><code>(?:exp)</code></td>
+<td>非捕获组，表示当一个限定符应用到一个组，但组捕获的子字符串并非所需时，通常会使用非捕获组构造。</td>
+</tr>
+<tr>
+<td><code>(?=exp)</code></td>
+<td>匹配 exp 前面的位置。</td>
+</tr>
+<tr>
+<td><code>(?&lt;=exp)</code></td>
+<td>匹配 exp 后面的位置。</td>
+</tr>
+<tr>
+<td><code>(?!exp)</code></td>
+<td>匹配后面跟的不是 exp 的位置。</td>
+</tr>
+<tr>
+<td><code>(?&lt;!exp)</code></td>
+<td>匹配前面不是 exp 的位置。</td>
+</tr>
+</tbody></table>
+<h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\</code></td>
+<td>将下一个字符标记为或特殊字符、或原义字符、或向后引用、或八进制转义符。例如， ‘n’ 匹配字符 ‘n’。’\n’ 匹配换行符。序列 ‘' 匹配 “”，而 ‘(‘ 则匹配 “(“。</td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td>指明两项之间的一个选择。</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>匹配方括号范围内的任意一个字符。形式如：[xyz]、[^xyz]、[a-z]、[^a-z]、[x,y,z]</td>
+</tr>
+</tbody></table>
+<h1 id="常用案例"><a href="#常用案例" class="headerlink" title="常用案例"></a>常用案例</h1><h2 id="校验中文"><a href="#校验中文" class="headerlink" title="校验中文"></a>校验中文</h2><p>校验字符串中只能有中文字符（不包括中文标点符号）。中文字符的 Unicode 编码范围是 <code>\u4e00</code> 到 <code>\u9fa5</code>。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">^</span><span class="token punctuation">[</span>\u4e00<span class="token operator">-</span>\uu9fa5<span class="token punctuation">]</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="校验身份证号码"><a href="#校验身份证号码" class="headerlink" title="校验身份证号码"></a>校验身份证号码</h2><p>身份证为 15 位或 18 位。15 位是第一代身份证。从 1999 年 10 月 1 日起，全国实行公民身份证号码制度，居民身份证编号由原 15 位升至 18 位。</p>
+<ul>
+<li><strong>15 位身份证</strong>：由 15 位数字组成。排列顺序从左至右依次为：六位数字地区码；六位数字出生日期；三位顺序号，其中 15 位男为单数，女为双数。</li>
+<li><strong>18 位身份证</strong>：由十七位数字本体码和一位数字校验码组成。排列顺序从左至右依次为：六位数字地区码；八位数字出生日期；三位数字顺序码和一位数字校验码（也可能是 X）。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 15位有效身份证</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">3</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">4</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">5</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">6</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\d<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>\d<span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">13578</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">02</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">3</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">13456789</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">012</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token function">02</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span>\d<span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">02468</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">048</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">13579</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token number">0229</span><span class="token punctuation">)</span><span class="token punctuation">(</span>\d<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span>$
+
+<span class="token comment">// 18位有效身份证</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">3</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">4</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">5</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">6</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\d<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>\d<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">13578</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">02</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">3</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">13456789</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">012</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token function">02</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span>\d<span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">02468</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">048</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">13579</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token number">0229</span><span class="token punctuation">)</span><span class="token punctuation">(</span>\d<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">(</span>\d<span class="token operator">|</span><span class="token class-name">X</span><span class="token punctuation">)</span><span class="token punctuation">)</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="校验邮箱"><a href="#校验邮箱" class="headerlink" title="校验邮箱"></a>校验邮箱</h2><p>邮箱一般有以下要求：</p>
+<ol>
+<li>不能使用IP作为域名</li>
+<li>字符只能是英文字母、数字、<code>_</code>、<code>.</code>、<code>-</code>;</li>
+<li>首字符必须为英文字母或数字；</li>
+<li>特殊符号不能连续出现；</li>
+<li>必须包含<code>@</code></li>
+<li>域名的根域只能是字母，且至少为两个字符</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//邮箱正则</span>
+<span class="token operator">^</span><span class="token punctuation">[</span><span class="token class-name">A</span><span class="token operator">-</span><span class="token class-name">Za</span><span class="token operator">-</span>z0<span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">[</span>_\<span class="token punctuation">.</span>\<span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token punctuation">[</span>a<span class="token operator">-</span>zA<span class="token operator">-</span><span class="token constant">Z0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">)</span>@<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token class-name">A</span><span class="token operator">-</span><span class="token class-name">Za</span><span class="token operator">-</span>z0<span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">[</span>\<span class="token punctuation">.</span>\<span class="token operator">-</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token punctuation">[</span>a<span class="token operator">-</span>zA<span class="token operator">-</span><span class="token constant">Z0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token class-name">A</span><span class="token operator">-</span><span class="token class-name">Za</span><span class="token operator">-</span>z<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token punctuation">}</span><span class="token punctuation">)</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="校验URL"><a href="#校验URL" class="headerlink" title="校验URL"></a>校验URL</h2><p>校验 URL。支持 http、https、ftp、ftps。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//校验URL</span>
+<span class="token operator">^</span><span class="token punctuation">(</span>ht<span class="token operator">|</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span>tp<span class="token operator">|</span>tps<span class="token punctuation">)</span>\<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token punctuation">[</span>a<span class="token operator">-</span>zA<span class="token operator">-</span><span class="token constant">Z0</span><span class="token operator">-</span><span class="token number">9</span>\<span class="token operator">-</span>\<span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token operator">+</span>\<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span>a<span class="token operator">-</span>zA<span class="token operator">-</span><span class="token class-name">Z</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">(</span><span class="token operator">/</span>\<span class="token class-name">S</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">?</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="校验时间-日期"><a href="#校验时间-日期" class="headerlink" title="校验时间/日期"></a>校验时间/日期</h2><ul>
+<li>时间：时分秒必须是有效数字，十位不足补零；</li>
+<li>日期：校验闰年2月最后一天，大小月最后一天；</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//时间</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span>$
+<span class="token comment">//日期</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">!</span><span class="token number">0000</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">?</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token function">1</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">?</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">?</span><span class="token punctuation">[</span><span class="token number">13</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token function">1</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">29</span><span class="token operator">|</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">?</span><span class="token punctuation">[</span><span class="token number">13578</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">[</span><span class="token number">02</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token function">1</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">48</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">2468</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">048</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">13579</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">48</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">2468</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">048</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">13579</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token number">00</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token number">0</span><span class="token operator">?</span><span class="token number">2</span>\<span class="token function">2</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span><span class="token punctuation">)</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="校验中国手机"><a href="#校验中国手机" class="headerlink" title="校验中国手机"></a>校验中国手机</h2><p>十一位数字，或者带国际区号13位数字；</p>
+<blockquote>
+<p>移动有 16 个号段：134、135、136、137、138、139、147、150、151、152、157、158、159、182、187、188。其中 147、157、188 是 3G 号段，其他都是 2G 号段。联通有 7 种号段：130、131、132、155、156、185、186。其中 186 是 3G（WCDMA）号段，其余为 2G 号段。电信有 4 个号段：133、153、180、189。其中 189 是 3G 号段（CDMA2000），133 号段主要用作无线网卡号。总结：13 开头手机号 0-9；15 开头手机号 0-3、5-9；18 开头手机号 0、2、5-9。</p>
+<p>此外，中国在国际上的区号为 86，所以手机号开头有+86、86 也是合法的。</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//手机号码</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token punctuation">(</span>\<span class="token operator">+</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token number">86</span>\s<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token function">15</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>\d<span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="中国固话"><a href="#中国固话" class="headerlink" title="中国固话"></a>中国固话</h2><p>固话号码，必须加区号（以 0 开头）。</p>
+<p> 3 位有效区号：010、020~029，固话位数为 8 位。</p>
+<p> 4 位有效区号：03xx 开头到 09xx，固话位数为 7。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//中国固话号码</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token number">010</span><span class="token operator">|</span><span class="token number">02</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span>\s<span class="token operator">|</span><span class="token operator">-</span><span class="token punctuation">)</span>\d<span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span>\d<span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span>\s<span class="token operator">|</span><span class="token operator">-</span><span class="token punctuation">)</span>\d<span class="token punctuation">{</span><span class="token number">7</span><span class="token punctuation">}</span>$<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="校验IP地址"><a href="#校验IP地址" class="headerlink" title="校验IP地址"></a>校验IP地址</h2><p>IPv4 地址通常用“点分十进制”表示成（a.b.c.d）的形式，其中，a,b,c,d 都是 0~255 之间的十进制整数</p>
+<p>IPv6 的 128 位地址通常写成 8 组，每组为四个十六进制数的形式。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//IPv4</span>
+<span class="token operator">^</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token operator">?</span>\d\d<span class="token operator">?</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token operator">?</span>\d\d<span class="token operator">?</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token operator">?</span>\d\d<span class="token operator">?</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">01</span><span class="token punctuation">]</span><span class="token operator">?</span>\d\d<span class="token operator">?</span><span class="token operator">|</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>\d<span class="token operator">|</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">)</span>$
+  
+<span class="token comment">//IPv6</span>
+<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token operator">|</span>fe80<span class="token operator">:</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">%</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>zA<span class="token operator">-</span><span class="token class-name">Z</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">}</span><span class="token operator">|</span><span class="token operator">::</span><span class="token punctuation">(</span><span class="token function">ffff</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span>a<span class="token operator">-</span>fA<span class="token operator">-</span><span class="token class-name">F</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span>\<span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="特定字符"><a href="#特定字符" class="headerlink" title="特定字符"></a>特定字符</h2><ul>
+<li>匹配长度为 3 的字符串：<code>^.{3}$</code>。</li>
+<li>匹配由 26 个英文字母组成的字符串：<code>^[A-Za-z]+$</code>。</li>
+<li>匹配由 26 个大写英文字母组成的字符串：<code>^[A-Z]+$</code>。</li>
+<li>匹配由 26 个小写英文字母组成的字符串：<code>^[a-z]+$</code>。</li>
+<li>匹配由数字和 26 个英文字母组成的字符串：<code>^[A-Za-z0-9]+$</code>。</li>
+<li>匹配由数字、26 个英文字母或者下划线组成的字符串：<code>^\w+$</code></li>
+</ul>
+<h2 id="特定数字"><a href="#特定数字" class="headerlink" title="特定数字"></a>特定数字</h2><ul>
+<li>匹配正整数：<code>^[1-9]\d*$</code></li>
+<li>匹配负整数：<code>^-[1-9]\d*$</code></li>
+<li>匹配整数：<code>^(-?[1-9]\d*)|0$</code></li>
+<li>匹配正浮点数：<code>^[1-9]\d*\.\d+|0\.\d+$</code></li>
+<li>匹配负浮点数：<code>^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$</code></li>
+<li>匹配浮点数：<code>^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Semon</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://destinys.github.io/2021/08/03/02-program/java-bian-cheng-zi-xue-zhi-lu/java-bian-cheng-zi-xue-zhi-lu-11-zheng-ze/">https://destinys.github.io/2021/08/03/02-program/java-bian-cheng-zi-xue-zhi-lu/java-bian-cheng-zi-xue-zhi-lu-11-zheng-ze/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Semon</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'LG6CeVXJS7pCw3q9f9xiagip-gzGzoHsz',
+        appKey: 'Sxv6WAcyyQ2q7G1CNlKInz74',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/08/03/02-program/java-bian-cheng-zi-xue-zhi-lu/java-bian-cheng-zi-xue-zhi-lu-10-zhu-jie/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Java编程自学之路：注解">
+                        
+                        <span class="card-title">Java编程自学之路：注解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Program/" class="post-category">
+                                    Program
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/03/02-program/java-bian-cheng-zi-xue-zhi-lu/java-bian-cheng-zi-xue-zhi-lu-12-bian-ma/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Java编程自学之路：编码">
+                        
+                        <span class="card-title">Java编程自学之路：编码</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Program/" class="post-category">
+                                    Program
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Semon&#39;s Blog<br />'
+            + '文章作者: Semon<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2022</span>
+            
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">Semon</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "1";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/destinys" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:4304517@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=4304517" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 4304517" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

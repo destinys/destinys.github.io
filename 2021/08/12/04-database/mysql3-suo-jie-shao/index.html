@@ -1,0 +1,1697 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MySQL之锁介绍, Semon&#39;s Blog">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>MySQL之锁介绍 | Semon&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Semon&#39;s Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Semon&#39;s Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/destinys" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/destinys" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">MySQL之锁介绍</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Database/" class="post-category">
+                                Database
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-08-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.6k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="什么是锁"><a href="#什么是锁" class="headerlink" title="什么是锁"></a>什么是锁</h1><p>锁是计算机协调多个进程或线程并发访问某一资源的机制；</p>
+<h2 id="MySQL锁类型"><a href="#MySQL锁类型" class="headerlink" title="MySQL锁类型"></a>MySQL锁类型</h2><p>MySQL不同的存储引擎支持不同的锁机制，所有的存储引擎都以自己的方式实现了锁机制，服务器层完全不了解存储引擎的锁实现：</p>
+<ul>
+<li>MyISAM和MEMORY存储引擎采用表级锁（<code>table-level locking</code>）；</li>
+<li>BDB存储引擎采用页面锁（<code>page-level locking</code>），但也支持表级锁；</li>
+<li>InnoDB存储引擎采用行级锁（<code>row-level locking</code>），但也支持表级锁；</li>
+</ul>
+<p>默认情况下，表锁和行锁都是自动获得的，不需要用户使用额外的命令；但也支持用户显式进行锁表或事务控制；</p>
+<p><strong>不同锁粒度比较：</strong></p>
+<ul>
+<li>表级锁：开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突概率最高，并发度最低；<ul>
+<li>一次性同时获取所有需要的锁并按相同顺序获取表锁来避免死锁；</li>
+<li>适合已查询为主，并发用户少，只有少量按索引条件更新数据的应用，如WEB应用；</li>
+</ul>
+</li>
+<li>行级锁：开销大，加锁慢；容易出现死锁；锁定粒度小，发生锁冲突概率低，并发度高；<ul>
+<li>最大程度支持并发，同时带来了最大的锁性能开销；</li>
+<li>InnoDB中，除单个SQL事务外，锁是逐步获得的，这也导致容易出现死锁；</li>
+<li>适合有大量按索引条件并发更新少量不同数据，同时又有并发查询的应用，如一些在线式服务处理系统(OLTP)；</li>
+</ul>
+</li>
+<li>页面锁：开销和加锁时间介于表级锁与行级锁之间；会出现死锁；锁粒度介于表级锁与行级锁之间，并发度一般；</li>
+</ul>
+<h2 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h2><p>全局锁又叫FTWRL（<code>Flush tables with read lock</code>），全局锁的使用场景一般为全库逻辑备份，让数据库可以恢复到最近一段时间之类的某个时刻，这对数据安全，对系统本身非常重要；通过FTWRL，让整个库处于只读状态，其实是基于最近的全量数据备份+备份开始的Binlog操作；使用全局锁时，所有写相关的操作都会处于阻塞等待状态，阻塞的操作包括：</p>
+<ul>
+<li>数据修改语句DML：<code>insert</code>、<code>delete</code>、<code>update</code>语句；</li>
+<li>数据定义语句DDL：<code>alter table</code>、<code>create table</code>、<code>drop table</code>等；</li>
+<li>事务相关操作：开启 事务、提交事务、回滚事务等；</li>
+<li>主从同步：从无无法拉取主库Binlog，增加主从同步延迟；</li>
+</ul>
+<h2 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h2><p>表级锁包含表锁、元数据锁（<code>Meta Data Lock</code>，简称MDL）</p>
+<h3 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h3><p>基于历史原因，在没有InnoDB引擎前表锁就是最小粒度的锁，索引相关引擎都会直接使用表锁；表锁本身是互斥锁，加锁语法为<code>lock tables ... read/write</code>，需加锁线程为其解锁或客户端异常自动解锁，解锁语法为<code>unlock tables</code>；</p>
+<blockquote>
+<p>MyISAM引擎在执行<code>update</code>等语句时会自动添加表锁；</p>
+<p>InnoDB在开启事务并且隔离级别为串行化时也会加表锁；</p>
+<p>个别情况下InnoDB的行级锁会退化为表锁；</p>
+</blockquote>
+<h3 id="元数据锁"><a href="#元数据锁" class="headerlink" title="元数据锁"></a>元数据锁</h3><p>MySQL5.5引入了元数据锁，元数据锁分为读锁和写锁，可以理解成类似Java中的<code>ReentrantReadWriteLock</code>中的<code>ReadLock</code>和<code>WriteLock</code>；读锁与读锁之间可共享，但读锁与写锁、写锁与写锁之间互斥；DML语句都会先获取MDL读锁，DDL语句都会先获取MDL写锁；MDL读锁与写锁都是自动获取与释放的；</p>
+<p>高并发场景下，对表元数据进行修改或添加索引等操作可能会导致整个数据库实例宕机；优化方案为：</p>
+<ol>
+<li>对元数据操作设置超时参数；</li>
+<li>手动kill长事务线程；</li>
+</ol>
+<h2 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h2><p>行级锁包括行锁、临键锁和间隙锁；</p>
+<h3 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h3><p>行锁就是所在主键索引的B+树上，也就是一行记录，行锁本身是互斥锁；在InnoDB引擎是服务中，行锁是在需要的时候才加上，但并不是不需要马上就会释放，而是等到事务结束时才能释放，即两阶段锁协议；基于两阶段锁协议，如果事务中需要锁多行，需要把最可能造成锁冲突、最可能影响并发度的锁尽量后释放；</p>
+<h3 id="临键锁"><a href="#临键锁" class="headerlink" title="临键锁"></a>临键锁</h3><p>临键锁（<code>Next-key Lock</code>）是一个前开后闭的区间；</p>
+<h3 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h3><p>间隙锁（<code>Gap Lock</code>）是一个前开后开的区间；</p>
+<h3 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h3><p>当前数据库主键索引中有：1，3，5，8四条数据，分别拥有的锁为：</p>
+<p>行锁：1，3，5，8</p>
+<p>临键锁：(-∞，1]，(1,3]，(3,5]，(5,8]，(8,+∞]</p>
+<p>间隙锁：(-∞，1)，(1,3)，(3,5)，(5,8)，(8,+∞)</p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>事务是指作为单个逻辑工作单元执行的一系列操作，要么完全地执行，要么完全地不执行；</p>
+<h2 id="事务特性"><a href="#事务特性" class="headerlink" title="事务特性"></a>事务特性</h2><ul>
+<li><strong>原子性</strong>：事务操作不可分割；</li>
+<li><strong>一致性</strong>：事务执行前后数据完整性保持一致；</li>
+<li><strong>隔离性</strong>：一个事务执行过程中，不应该收到其它事务干扰；</li>
+<li><strong>持久性</strong>：事务一旦结束，数据就持久化到数据库或其他存储介质中；</li>
+</ul>
+<p>默认情况下，MySQL每条SQL都是一个单独的事务；</p>
+<h2 id="事务并发问题"><a href="#事务并发问题" class="headerlink" title="事务并发问题"></a>事务并发问题</h2><ul>
+<li><strong>脏读</strong>（<code>Dirty Reads</code>）：一个事务正在进行操作时，在这个事务完成并提交前，其操作数据处于不一致状态；这时，其它事务读取对应数据时，如果不加控制，就会读取了这些“脏”了的数据，并据此做进一步处理，这种现场被称为脏读；</li>
+<li><strong>不可重复读（<code>Non-Repeatable Reads</code>）</strong>：一个事务读取某些数据，在它结束读之前，另一个事务可能完成了对数据行的更改；当第一个事务试图再次读取这些数据时，服务回返回被其他事务修改后的结果；</li>
+<li><strong>幻读（<code>Phantom Reads</code>）</strong>：一个事务按相同条件重新读取以前检索过的数据，却发现其它事务插入了满足条件的新数据，这种现象称为幻读；</li>
+</ul>
+<h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交(<code>read-uncommitted</code>)</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>不可重复读(<code>read-committed</code>)</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可重复读(<code>repeatable-read</code>)</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>串行化(<code>serializable</code>)</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>MySQL默认的事务隔离级别为<code>repeatable-read</code></p>
+<ul>
+<li><strong>读未提交</strong>：事务可以读到其他事务未提交的数据，此时若A事务读取到B事务未提交的修改，然后B事务回滚就会产生脏读；</li>
+<li><strong>不可重复读</strong>：事务只能读到其他事务已提交的数据，不会产生脏读，但若事务B提交在A的两次查询间就会产生不可重复读；</li>
+<li><strong>可重复读</strong>：可重复读的隔离级别使用了MVCC机制，A事务中读取的是快照版本，而非最新版本；B事务的更新是创建了一个新版本来更新，不同事务的读和写是分离的；</li>
+<li><strong>串行化</strong>：MySQL中事务隔离级别为<code>Serializable</code>时会锁表，因此不会出现幻读的情况，但这种隔离级别并发性降低；</li>
+</ul>
+<h2 id="事务加锁方式"><a href="#事务加锁方式" class="headerlink" title="事务加锁方式"></a>事务加锁方式</h2><ul>
+<li><strong>一次性锁协议</strong>：事物开始时，就一次性申请所有的锁，之后不在申请任何锁，如果其中某个锁不可用，则整个申请就会失败，事务不会执行，在事务尾端，一次性释放所有的锁；一次性锁协议不会产生死锁问题，但事务的并发度不高；</li>
+<li><strong>两阶段锁协议</strong>：整个事务分为两个阶段，前一个阶段为加锁，后一个阶段为解锁；在加锁阶段，事务只能加锁，也可以操作数据，但不能解锁，知道事务释放第一个锁，就进入解锁阶段，此过程中事务只能解锁，也可以操作数据，不能再加锁；两阶段锁协议是的事务具有较高的并发度，因为解锁不必发生在事务结尾，它的不足是没有解决死锁问题，因为在加锁阶段没有顺序要求；例如两个事务分别申请了A，B锁，接着又申请了对方的锁，此时将进入死锁状态；</li>
+</ul>
+<h1 id="MyISAM表锁"><a href="#MyISAM表锁" class="headerlink" title="MyISAM表锁"></a>MyISAM表锁</h1><p>MyISAM表的读操作与写操作之间，以及写操作之间是串行的；当一个线程获得对一个表的写锁后，只有持有锁的线程可以对表进行更新操作，其它线程的读写操作都会等待，直到锁被释放为止；</p>
+<p>默认情况下，写锁比读锁具有更高的优先级：当一个锁释放时，这个锁会优先给写锁队列中等待的获取锁请求，然后再给读取锁队列中等待的获取锁请求；</p>
+<p>这正是MyISAM表不太适合有大量更新操作和查询操作应用的原因，因为大量的更新操作会造成查询操作很难获取读锁，从而一直阻塞；同时，一些需要长时间运行的查询操作，也会使写线程“饿死”，应用中应尽量避免出现长时间运行的查询操作；</p>
+<p>可以通过参数调整读锁与写锁优先级：</p>
+<ul>
+<li>指定启动参数<code>low-priority-updates</code>使MyISAM引擎默认给予读请求以更高优先级；</li>
+<li>通过执行命令<code>set low_priority_updates=1</code>，使该session发出的更新请求优先级降低；</li>
+<li>通过指定<code>insert</code>、<code>update</code>、<code>delete</code>语句的<code>low_priority</code>属性，降低对应语句的优先级；</li>
+<li>通过系统参数<code>max_write_lock_count</code>设置一个恰当的值，当一个表的读锁达到这个值后，MySQL就暂时将写锁请求优先级降低，给读锁一定获取锁的机会；</li>
+</ul>
+<h2 id="MyISAM加锁方法"><a href="#MyISAM加锁方法" class="headerlink" title="MyISAM加锁方法"></a>MyISAM加锁方法</h2><p>MyISAM在执行查询语句前，会自动给涉及的表加读锁，在执行更新操作前，会自动给涉及的表加写锁，这个过程不需要用于干预；因此，用户一般不用直接使用<code>lock table</code>命令给MyISAM表显式加锁；</p>
+<p>在自动加锁的情况下，MyISAM总是一次获取SQL语句所需要的所有锁，这也正是MyISAM表不会出现死锁的原因；</p>
+<p>MyISAM存储引擎支持并发插入，以减少给定表的读和写操作之间的争用：</p>
+<p>如果MyISAM表在数据文件中间没有空闲块，则行始终插入数据文件的末尾；这种情况下，可以自由混合并发使用MyISAM表的<code>insert</code>和<code>select</code>语句而不需要加锁 — 可以在其他线程进行读操作的时候，同时将行插入到MyISAM表中；文件中间的空闲块可能是从表格中间删除或更新的行而产生的；如果文件中间有空闲块，则并发插入会被禁用，当所有空闲块都填充有新数据时，又会自动重新启用；该功能受MySQL的<code>concurrent_insert</code>系统变量控制；</p>
+<p>使用<code>lock tables</code>可显式获取表锁，则可以请求<code>read local</code>锁而不是<code>read</code>锁，以便在锁定表时，其它会话可以使用并发插入；</p>
+<ul>
+<li><code>concurrent_insert</code>设置为0时，不允许并发插入；</li>
+<li><code>concurrent_insert</code>设置为1时，如果MyISAM表中没有空洞（即表对应数据文件不存在空闲块），MyISAM允许一个线程读表时，另一个线程从表尾插入记录；MySQL默认配置；</li>
+<li><code>concurrent_insert</code>设置为2时，无论MyISAM表中有没有空洞，都允许在表尾插入记录；</li>
+</ul>
+<h1 id="InnoDB事务"><a href="#InnoDB事务" class="headerlink" title="InnoDB事务"></a>InnoDB事务</h1><h2 id="InnoDB事务隔离"><a href="#InnoDB事务隔离" class="headerlink" title="InnoDB事务隔离"></a>InnoDB事务隔离</h2><p>在MVCC并发控制中，读操作可分为两类：快照读（<code>snapshot read</code>）与当前读（<code>current read</code>）。</p>
+<ul>
+<li>快照读，读取的是记录的可见版本，不用加锁；</li>
+<li>当前读，读取的是记录的最新版本，并且，当前读返回的记录，都会加上锁，保证其他事务不会再并发修改这条记录；</li>
+</ul>
+<p>MySQL/InnoDB定义了4种隔离级别：</p>
+<ul>
+<li><p>Read Uncommitted</p>
+<p>可以读取未提交记录；</p>
+</li>
+<li><p>Read Committed（RC）</p>
+<p>当前读操作RC格力级别保证对读取到的记录加锁，存在幻读现象；使用MVCC，读取数据时会读取自身版本和最新版本，以最新版本为主，可以读已提交记录，存在不可重复读现象；</p>
+</li>
+<li><p>Repeatable Read（RR）</p>
+<p>当前读操作PR隔离级别保证对读取到的记录加锁，同时保证对读取的范围加锁，新的满足条件的记录不能插入间隙锁，不存在幻读现象；使用MVCC保存两个事务操作的数据互相隔离，不存在不可重复读现象；</p>
+</li>
+<li><p>Serializable</p>
+<p>从MVCC并发控制退化为基于锁的并发控制；不区别快照读与当前读，所有读操作均为当前读，读加读锁，写加写锁；</p>
+</li>
+</ul>
+<p>Serializable隔离级别下，读写冲突，因此并发度急剧下降，在MySQL.InnoDB下不建议使用；</p>
+<h2 id="InnoDB下MVCC控制"><a href="#InnoDB下MVCC控制" class="headerlink" title="InnoDB下MVCC控制"></a>InnoDB下MVCC控制</h2><p>MVCC是一种多版本并发控制机制；锁机制可以控制并发操作，但是其系统开销较大，而MVCC可以在大多数情况下代替行级锁，使用MVCC，能降低其系统开销；</p>
+<p>MVCC是通过保存数据在某个时间点的快照来实现的；不同存储引擎的MVCC、不同存储引擎的MVCC实现是不同的，典型的有乐观并发控制和悲观并发控制；</p>
+<p>InnoDB的MVCC，是通过在每行记录后面保存两个隐藏的列来实现的，这两个列，分别保存了该行的创建时间，一个保存该行的删除时间；这里存储的并不是实际的时间，而是系统版本号，每开始一个新的事务，系统版本号都会自动递增，事务开始时可的系统版本号会作为事务的ID；</p>
+<ul>
+<li><p>INSERT</p>
+<p>InnoDB为新插入的每一行保存当前系统版本号作为版本号；</p>
+</li>
+<li><p>UPDATE</p>
+<p>InnoDB执行Update，实际上是新插入了一行记录，并保存其创建时间为当前事务的ID，同时保存当前事物ID到要Update行的删除时间；</p>
+</li>
+<li><p>DELETE</p>
+<p>InnoDB会为删除的每一行保存当前系统的版本号作为删除标识；</p>
+</li>
+<li><p>SELECT</p>
+<p>InnoDB会检索每行记录，需要同时满足以下条件：</p>
+<ul>
+<li>InnoDB只会查找版本早于当前事务版本的数据行，确保事务读取的行，要么在事务开始前已经存在，要么是事务自身插入或修改过的；</li>
+<li>行的删除版本要么未定义要么大于当前事务版本号，这可以确保事务读取到的行，在事务开始之前未被删除；</li>
+</ul>
+</li>
+</ul>
+<h2 id="InnoDB事务锁"><a href="#InnoDB事务锁" class="headerlink" title="InnoDB事务锁"></a>InnoDB事务锁</h2><h3 id="锁模式"><a href="#锁模式" class="headerlink" title="锁模式"></a>锁模式</h3><ul>
+<li>共享锁(S)：又称读锁，若事务T对数据对象A加上S锁，则事务T可以读A但不能修改A，其它事务只能再对A添加S锁，而不能加X锁，直到事务T释放A上的S锁；这保证了其它事务可以读A，但在T释放A上的S锁之前不能对A做任何修改；</li>
+<li>排它锁(X)：又称写锁，若事务T读数据对象A加上X锁，则事务T既可以读A又可以写A，其它事务不能再对A添加任何锁，直到事务T释放A上的锁；这保证了其它事务在T释放A上的锁之前不能再读取和修改A；</li>
+</ul>
+<p>另外，为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB还有两种内部使用的意向锁（<code>Intention Locks</code>），这两种意向锁都是表锁：</p>
+<ul>
+<li>意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的IS锁；</li>
+<li>意向排它锁（IX）：事务打算给数据行加行排它锁，事务在给一个数据行加排它锁前必须先取得该表的IX锁；</li>
+</ul>
+<p>意向锁仅仅用于表锁和行锁的共存使用；如果我们的操作仅仅涉及行锁，那么意向锁不会对我们的操作产生任何影响；在任一操作给表A的一行记录加锁前，首先要给该表加意向锁，如果获得了意向锁，然后才会加行锁，并在加行锁时判断是否冲突；如果现在有一个操作要获得表A的表锁，由于意向锁的存在，表锁获取会失败（如果没有意向锁的存在，加表锁之前可能要遍历整个聚簇索引，判断是否有行锁存在，如果没有行锁才能加表锁）；</p>
+<p>同理，如果某一操作已经获得了表A的表锁，那么另一操作获得行锁之前，首先会检查是否可以获得意向锁，并在获得意向锁失败后，等待表锁操作的完成；</p>
+<ol>
+<li>意向锁是表级锁，但是却表示事务正在读或写某一行记录；</li>
+<li>意向锁之间不会冲突，因为意向锁仅仅代表要对某行记录进行操作，在家行锁时，会判断是否冲突；</li>
+<li>意向锁是InnoDB自动加的，不需要用户干预；</li>
+</ol>
+<h3 id="锁类型"><a href="#锁类型" class="headerlink" title="锁类型"></a>锁类型</h3><ul>
+<li><p>间隙锁（<code>Gap Lock</code>）：只锁间隙，表现为锁住一个区间（区间为开区间，也就是不包括边界值）；</p>
+</li>
+<li><p>记录锁（<code>Record Lock</code>）：只锁记录，表现为仅锁单独的一行记录；</p>
+</li>
+<li><p>Next-key锁，同时锁住记录与间隙，从实现的角度为Record Lock + Gap Lock，而且两种锁有可能只成功一个，所以Next-key是半开半闭区间，且是下界开，上界闭；一张表中的Next-key锁包括：（负无穷大,最小的第一条记录]，(记录行间区间]，(最大的最后一条记录,正无穷大)；</p>
+</li>
+<li><p>插入意图锁（<code>Insert Intention Lock</code>）：插入操作时使用的锁；在代码中，插入意图锁实际上是Gap锁上加了一个<code>LOCK_INSERT_INTENTION</code>标记；也就是说<code>insert</code>语句会对插入的行加一个X记录锁，但是在插入这个行的过程之前，会设置一个<code>Insert Intention</code>的Gap锁，叫做<code>Insert Intention</code>锁；</p>
+</li>
+<li><p>乐观锁：总是认为不会产生并发问题，每次读取数据的时候总认为不会有其它线程对数据进行修改，因此不会上锁；但是在更新时会判断其它线程在这之前是否有对数据进行修改，一般会使用版本号机制或CAS操作实现；</p>
+<ul>
+<li><p>版本号方式：</p>
+<p>一般在数据表中加上数据版本号<code>version</code>字段，表示数据被修改的次数，当数据被修改时，<code>version</code>值自增1；当线程A要更新数据值时，在读取数据的同时也会读取<code>version</code>值，在提交更新时，若刚才读取到的<code>version</code>值为当前数据库中的<code>version</code>值相等时才更新，否则重试更新操作，直到更新成功；</p>
+</li>
+</ul>
+</li>
+<li><p>悲观锁：总是假设最坏情况，每次读取数据时总认为有其它线程会修改数据，所以总是会加锁（读锁、写锁、行锁等），当其它线程想要访问数据时，都需要阻塞挂起；可以依靠数据库实现，如行锁、读锁和写锁等，都是在操作之前加锁；</p>
+</li>
+</ul>
+<h2 id="一致性非锁定读"><a href="#一致性非锁定读" class="headerlink" title="一致性非锁定读"></a>一致性非锁定读</h2><p>InnoDB使用MVCC来实现一致性非锁定读，在<code>read-committed</code>和<code>repeatable-read</code>两种事务隔离级别下使用，且效果不同，具体如下：</p>
+<ul>
+<li><p>read-committed</p>
+<p>在读已提交的隔离级别下，事务在一致性非锁定读始终读取当前最新的数据快照，即当其它事务提交更新后快照更新也会读取最新的版本，也就是出现不可重复读；</p>
+</li>
+<li><p>repeatable-read</p>
+<p>在可重复读的隔离级别下，事务始终读取事物开始时的快照版本；</p>
+</li>
+</ul>
+<h2 id="一致性锁定读"><a href="#一致性锁定读" class="headerlink" title="一致性锁定读"></a>一致性锁定读</h2><p>一致性锁定读有两种实现方式，一种是加X锁，一种是加S锁：</p>
+<ul>
+<li>X锁：通过<code>select ... for update</code>方式显式添加X锁读取数据；</li>
+<li>S锁：通过<code>select ... lock in share mode</code>方式显式添加S锁读取数据；</li>
+</ul>
+<h2 id="自增长与锁"><a href="#自增长与锁" class="headerlink" title="自增长与锁"></a>自增长与锁</h2><p><code>innodb_autoinc_lock_mode</code>有3种模式：0，1，2</p>
+<ul>
+<li>0：涉及<code>auto-increment</code>列的插入语句加的表级AUTO-INC锁，只有插入执行结束后才会释放锁，即事务在进行插入时获取自增长值时先加锁，后插入，插入完释放；</li>
+<li>1：对于可以事先确定插入行数的语句（包括单行和多行插入），使用互斥量操作自增值，分配连续的确定的<code>auto-increment</code>值，对于插入行数不确定的插入语句仍使用表级AUTO-INC锁；这种模式下，事务回滚，<code>auto-increment</code>值不会回滚，即自增列内容会不连续；</li>
+<li>2：对于所有的插入操作使用互斥量操作自增值，来一个插入分配一个<code>auto-increment</code>值，此时一个批量插入的自增长值就可能不连续，且在SQL语句级的主从同步可能会出现问题；</li>
+</ul>
+<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a>锁升级</h2><p>InnoDB行锁是通过给索引上的索引项加锁来实现，这一点MySQL与Oracle不同，后者是通过在数据块中对相应数据行加锁来实现；InnoDB这种行锁实现特点意味着：只有通过索引条件检索数据，InnoDB才会使用行级锁，否则，InnoDB将使用表锁；</p>
+<p>InnoDB目前处理死锁的方法是：将持有最少行级排它锁的事务回滚；如果是因为死锁引起的回滚，可以考虑在应用中重新执行；</p>
+<h1 id="显式锁与隐式锁"><a href="#显式锁与隐式锁" class="headerlink" title="显式锁与隐式锁"></a>显式锁与隐式锁</h1><ul>
+<li>显式锁：某些特殊情况需要开发人员手动进行加锁、解锁，这种使用方式被称为显示锁；</li>
+<li>隐式锁：当多个线程并发访问同一个数据的时候，为了保证数据一致性，数据库管理系统会自动为该数据加锁、解锁，这种机制称为隐式锁；</li>
+</ul>
+<h1 id="悲观锁与乐观锁"><a href="#悲观锁与乐观锁" class="headerlink" title="悲观锁与乐观锁"></a>悲观锁与乐观锁</h1><h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁（<code>Optimistic Lock</code>）：假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性；乐观锁不能解决脏读问题；</p>
+<p>乐观锁，顾名思义，就是乐观的认为每次取数据的时候不会被其它进程修改，所以不用上锁，但在更新的时候会判断在此期间是否有其它进程更新这个数据，可以使用版本号等机制实现；乐观锁适用于多读的应用类型，可以提高吞吐量，像数据库提供类似于<code>write_condition</code>机制的其实都是提供的乐观锁；</p>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>悲观锁（<code>Pessimistic Lock</code>）：假定肯定会发生冲突，屏蔽一些可能违反数据完整性的操作；</p>
+<p>悲观锁，顾名思义，就是悲观的认为每次获取数据的时候都会被其他进程修改，所以每次获取数据的时候都会上锁，其它进程获取数据会一直阻塞到当前进程释放锁；传统的关系型数据库里边用到了很多这种锁机制，比如行锁、表锁、读锁、写锁等，都是在操作之前上锁；</p>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><p>通常来说，死锁都是应用设计的问题，通过调整业务流程，数据库对象设计、事务大小以及访问数据库SQL等，绝大部分死锁都可以避免；避免死锁的方法有：</p>
+<ul>
+<li>在应用中，不同程序并发存取多个表时，应尽量约定以相同的顺序来访问表，这样可以大大降低产生死锁的机会；</li>
+<li>在程序以批量方式处理数据的时候，如果事先对数据排序，保证每个线程按固定的顺序来处理记录，可以大大降低死锁出现的可能；</li>
+<li>在事务中，如果要更新记录，应该直接申请足够级别的锁，即排它锁，而非先申请共享锁，更新时再申请排它锁；因为在申请排它锁时，可能已经有其它线程申请了相同记录的共享锁，从而造成锁冲突甚至死锁；</li>
+<li>选择合理的事务大小，小事务发生锁冲突的几率也更小；</li>
+</ul>
+<p>如果出现死锁，可以用<code>show innodb status</code>命令来确定最后一个死锁产生的原因；返回结果中包括死锁相关事务的详细信息，如引发死锁的SQL语句，事务已经获得的锁，正在等待的锁以及被回滚的事务等；</p>
+<p>死锁的发生与否，并不在于事务中有多少条SQL，死锁的关键在于：两个（或以上）<code>Session</code>加锁的顺序不一致；</p>
+<p>自增锁是语句级的锁，如果当前事务先获取锁，却后执行结束，在从库按语句复制的话，会出现ID不一致；</p>
+<h1 id="锁性能优化"><a href="#锁性能优化" class="headerlink" title="锁性能优化"></a>锁性能优化</h1><ul>
+<li>尽量使用较低的隔离级别；</li>
+<li>精心设计索引，并尽量使用索引访问数据，使加锁更精确，从而减少锁冲突的机会；</li>
+<li>选择合理的事务大小，小失误发生锁冲突的几率也更小；</li>
+<li>给记录集显示加锁时，做好一次性请求足够级别的锁；比如要修改数据的话，最好直接申请排它锁，而不是先申请共享锁，修改时在申请排它锁，这容易导致死锁；</li>
+<li>不同的程序访问一组表时，应尽量约定以相同顺序访问各表，对一个表而言，尽可能以固定的顺序存取表中的行，从而减少死锁的机会；</li>
+<li>尽量用相等条件访问数据，避免间隙锁对并发插入的影响；</li>
+<li>不要申请超过实际需要的锁级别；</li>
+<li>除非必须，查询时不要显式加锁；MySQL的MVCC可以实现事务中的查询不加锁，优化事务性能；MVCC只在<code>committed read</code>和<code>repeatable read</code>两种级别下工作；</li>
+<li>对于一些特定事务，可以使用表锁来提高处理速度，减少死锁可能；</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">semon</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://destinys.github.io/2021/08/12/04-database/mysql3-suo-jie-shao/">https://destinys.github.io/2021/08/12/04-database/mysql3-suo-jie-shao/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">semon</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'LG6CeVXJS7pCw3q9f9xiagip-gzGzoHsz',
+        appKey: 'Sxv6WAcyyQ2q7G1CNlKInz74',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/08/12/04-database/mysql2-suo-yin/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MySQL之索引">
+                        
+                        <span class="card-title">MySQL之索引</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Database/" class="post-category">
+                                    Database
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/12/04-database/mysql4-innodb-jia-gou/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL之InnoDB架构">
+                        
+                        <span class="card-title">MySQL之InnoDB架构</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Database/" class="post-category">
+                                    Database
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Semon&#39;s Blog<br />'
+            + '文章作者: Semon<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2022</span>
+            
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">Semon</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "1";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/destinys" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:4304517@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=4304517" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 4304517" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
